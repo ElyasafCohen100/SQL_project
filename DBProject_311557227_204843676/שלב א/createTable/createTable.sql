@@ -1,13 +1,13 @@
 CREATE TABLE Loans (
     loanID INT NOT NULL,
-    loanAmount INT NOT NULL,
+    loanAmount INT NOT NULL,   
+    customerID INT NOT NULL,
     PRIMARY KEY (loanID)
 );
 
 CREATE TABLE Reporters (
     reporterID INT NOT NULL,
     reporterName VARCHAR(15) NOT NULL,
-    auditDate DATE NOT NULL,
     PRIMARY KEY (reporterID)
 );
 
@@ -15,6 +15,7 @@ CREATE TABLE Branche (
     brancheID INT NOT NULL,
     brancheLocation VARCHAR(15) NOT NULL,
     reporterID INT NOT NULL,
+    openedDate DATE NOT NULL,
     PRIMARY KEY (brancheID),
     FOREIGN KEY (reporterID) REFERENCES Reporters(reporterID)
 );
@@ -24,8 +25,10 @@ CREATE TABLE Workers (
     workerName VARCHAR(15) NOT NULL,
     workerRole VARCHAR(15) NOT NULL,
     brancheID INT NOT NULL,
+    teamID INT NOT NULL,
     PRIMARY KEY (workerID),
-    FOREIGN KEY (brancheID) REFERENCES Branche(brancheID)
+    FOREIGN KEY (brancheID) REFERENCES Branche(brancheID),
+    FOREIGN KEY (teamID) REFERENCES Teams(teamID)
 );
 
 CREATE TABLE Customers (
@@ -33,16 +36,13 @@ CREATE TABLE Customers (
     customerName VARCHAR(15) NOT NULL,
     accountID INT NOT NULL,
     joinDate DATE NOT NULL,
-    loanID INT NOT NULL,
-    PRIMARY KEY (customerID),
-    FOREIGN KEY (loanID) REFERENCES Loans(loanID)
+    brancheID INT NOT NULL,
+    FOREIGN KEY (brancheID) REFERENCES Branche(brancheID),
+    PRIMARY KEY (customerID)
 );
 
 CREATE TABLE Teams (
     teamID INT NOT NULL,
-    workerID INT NOT NULL,
-    loanID INT NOT NULL,
-    PRIMARY KEY (teamID),
-    FOREIGN KEY (workerID) REFERENCES Workers(workerID),
-    FOREIGN KEY (loanID) REFERENCES Loans(loanID)
+    workDay VARCHAR(10),
+    PRIMARY KEY (teamID)
 );
