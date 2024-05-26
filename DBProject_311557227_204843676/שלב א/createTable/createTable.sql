@@ -13,7 +13,7 @@ CREATE TABLE Reporters (
 
 CREATE TABLE Branche (
     brancheID INT NOT NULL,
-    brancheLocation VARCHAR(15) NOT NULL,
+    brancheLocation VARCHAR(20) NOT NULL,
     reporterID INT NOT NULL,
     openedDate DATE NOT NULL,
     PRIMARY KEY (brancheID),
