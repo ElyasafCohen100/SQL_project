@@ -1,0 +1,11 @@
+C:\Users\tsuri\AppData\Local\Programs\Python\Python39\python.exe C:\Users\tsuri\PycharmProjects\pythonProject6\main.py 
+Connected to the Oracle database
+404
+401
+401
+1601
+401
+401
+Connection closed
+
+Process finished with exit code 0

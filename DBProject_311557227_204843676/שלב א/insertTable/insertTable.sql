@@ -1,0 +1,21 @@
+insert into SYS.REPORTERS (REPORTERID, REPORTERNAME)
+values (102718, 'Michael');
+
+insert into SYS.TEAMS (TEAMID, WORKDAY)
+values (104996, 'sunday');
+
+insert into SYS.BRANCHE (BRANCHEID, BRANCHELOCATION, REPORTERID, OPENEDDATE)
+values (103401, 'Jacksonville', 102718, to_date('24-07-2006', 'dd-mm-yyyy'));
+
+insert into SYS.CUSTOMERS (CUSTOMERID, CUSTOMERNAME, ACCOUNTID, JOINDATE, BRANCHEID)
+values (100401, 'Juliette', 108401,  to_date('24-07-2006', 'dd-mm-yyyy'), 103401);
+
+insert into SYS.LOANS (LOANID, LOANAMOUNT, CUSTOMERID)
+values (101401, 10000, 100401);
+
+insert into SYS.WORKERS (WORKERID, WORKERNAME, WORKERROLE, BRANCHEID, TEAMID)
+values (107001, 'Taryn', 'Manager', 103401, 104996);
+
+
+
+
