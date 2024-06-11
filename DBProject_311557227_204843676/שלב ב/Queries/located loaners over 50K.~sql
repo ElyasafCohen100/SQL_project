@@ -1,4 +1,4 @@
--- all the loaners who loaned over 50K from the branches located in israel 
+-- all the loaners who loaned over 50K from the branches located in israel
 
 SELECT l.CUSTOMERID, c.CUSTOMERNAME, l.LOANAMOUNT, b.BRANCHELOCATION
 FROM loans l
@@ -9,4 +9,4 @@ WHERE l.LOANAMOUNT >= 50000 AND c.BRANCHEID IN (
     FROM branche b
     WHERE b.BRANCHELOCATION LIKE '%jerusalem%' or b.BRANCHELOCATION LIKE '%tel aviv%'
 )
-order by l.loanamount desc
+order by b.BRANCHELOCATION desc

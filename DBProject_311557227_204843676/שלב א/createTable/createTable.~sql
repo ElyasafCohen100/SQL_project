@@ -30,7 +30,6 @@ CREATE TABLE Loans (
     loanID INT NOT NULL,
     loanAmount INT NOT NULL,   
     customerID INT NOT NULL,
-    loanDate DATE NOT NULL,
     FOREIGN KEY (customerID) REFERENCES Customers(customerID),
     PRIMARY KEY (loanID)
 );
