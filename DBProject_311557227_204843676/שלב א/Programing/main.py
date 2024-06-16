@@ -1,5 +1,6 @@
 # This is a sample Python script.
 import random
+from datetime import date
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
@@ -28,14 +29,21 @@ def genBRANCH(reporter_id_list: list[int]):
     # Generate fake data
     branchs_list = []
     branch_id_list = []
+    locations = ["tel aviv", "jerusalem", "new york", "chicago", "berlin", "paris", "denver", "madrid", "london"]
+    locCounter = 0
     for id in range(400):
         branch_dict = {}
         branch_dict['brancheID'] = 103000 + id
         branch_id_list.append(103000 + id)
-        branch_dict['brancheLocation'] = fake.city()
+        branch_dict['brancheLocation'] = locations[locCounter]
         branch_dict['reporterID'] = reporter_id_list[id]
-        branch_dict['openedDate'] = fake.date_this_decade()
+        start_date = date(1999,1,1)
+        end_date = date(2004,12,12)
+        branch_dict['openedDate'] = fake.date_between_dates(start_date,end_date)
         branchs_list.append(branch_dict)
+        locCounter += 1
+        if locCounter == 8:
+            locCounter = 0
     return branchs_list, branch_id_list
 
 
@@ -57,6 +65,9 @@ def gen_loans(cast_id_list: list[int]):
     loans_list = []
     for id in range(400):
         loan_dict = {}
+        start_date = date(2010,1,1)
+        end_date = date(2015,12,12)
+        loan_dict['loanDate'] = fake.date_between_dates(start_date,end_date)
         loan_dict['loanID'] = 101000 + id
         loan_dict['loanAmount'] = random.randint(1000, 100000)
         loan_dict['customerID'] = cast_id_list[id]
@@ -186,9 +197,9 @@ if __name__ == '__main__':
             # Commit the transaction
             connection.commit()
         for loan in loans:
-            data = (loan['loanID'], loan['loanAmount'],loan['customerID'])
-            insert_rep = """ INSERT INTO Loans (loanID, loanAmount, customerID)
-                                    VALUES (:1, :2, :3)"""
+            data = (loan['loanID'], loan['loanAmount'],loan['customerID'],loan['loanDate'])
+            insert_rep = """ INSERT INTO Loans (loanID, loanAmount, customerID,loanDate)
+                                    VALUES (:1, :2, :3, :4)"""
             cursor.execute(insert_rep, data)
 
             # Commit the transaction
@@ -243,6 +254,6 @@ if __name__ == '__main__':
 #     loan_amount = random.randint(1000, 1000000)
 #     borrower_name = fake.name()
 #     city = fake.city()
-#     loan_date = fake.date_this_decade()
+#     loanDate = fake.date_this_decade()
 #
-#     data = (loan_id, loan_amount, borrower_name, city, loan_date)
+#     data = (loan_id, loan_amount, borrower_name, city, loanDate)
