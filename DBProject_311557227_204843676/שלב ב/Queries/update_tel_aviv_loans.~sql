@@ -16,4 +16,11 @@ BEGIN
 END;
 /
 
-
+select *
+from Loans
+WHERE customerID IN (
+        SELECT c.customerID
+        FROM Customers c
+        JOIN Branche b ON c.brancheID = b.brancheID
+        WHERE b.brancheLocation = 'berlin'
+    );

@@ -1,4 +1,4 @@
--- list the top 5 loaners (top means it has he most high amout for a loan
+-- list the top 6 loaners (top means it has he most high amout for a loan
 
 SELECT 
     c.customerName,

@@ -19,10 +19,12 @@ def gencast(branch_id_list: list[int]):
         cast_id_list.append(100000 + id)
         cust_dict['customerName'] = fake.first_name()
         cust_dict['accountID'] = 108000 + id
-        cust_dict['joinDate'] = fake.date_this_decade()
+        start_date = date(2005, 1, 1)
+        end_date = date(2009, 12, 12)
+        cust_dict['joinDate'] = fake.date_between_dates(start_date, end_date)
         cust_dict['brancheID'] = branch_id_list[id]
         custumers_list.append(cust_dict)
-    return custumers_list,cast_id_list
+    return custumers_list, cast_id_list
 
 
 def genBRANCH(reporter_id_list: list[int]):
@@ -37,9 +39,9 @@ def genBRANCH(reporter_id_list: list[int]):
         branch_id_list.append(103000 + id)
         branch_dict['brancheLocation'] = locations[locCounter]
         branch_dict['reporterID'] = reporter_id_list[id]
-        start_date = date(1999,1,1)
-        end_date = date(2004,12,12)
-        branch_dict['openedDate'] = fake.date_between_dates(start_date,end_date)
+        start_date = date(1999, 1, 1)
+        end_date = date(2004, 12, 12)
+        branch_dict['openedDate'] = fake.date_between_dates(start_date, end_date)
         branchs_list.append(branch_dict)
         locCounter += 1
         if locCounter == 8:
@@ -65,9 +67,9 @@ def gen_loans(cast_id_list: list[int]):
     loans_list = []
     for id in range(400):
         loan_dict = {}
-        start_date = date(2010,1,1)
-        end_date = date(2015,12,12)
-        loan_dict['loanDate'] = fake.date_between_dates(start_date,end_date)
+        start_date = date(2010, 1, 1)
+        end_date = date(2015, 12, 12)
+        loan_dict['loanDate'] = fake.date_between_dates(start_date, end_date)
         loan_dict['loanID'] = 101000 + id
         loan_dict['loanAmount'] = random.randint(1000, 100000)
         loan_dict['customerID'] = cast_id_list[id]
@@ -93,6 +95,7 @@ def gen_workers(branch_id_list: list[int], team_id_list: list[int]):
         worker_dict['workerRole'] = banking_roles[rol_index]
         worker_dict['brancheID'] = branch_id_list[id % 400]
         worker_dict['teamID'] = team_id_list[team_idx]
+        worker_dict['workerAge'] = random.randint(18, 90)
         rol_index += 1
         if rol_index == 4:
             rol_index = 0
@@ -154,9 +157,9 @@ if __name__ == '__main__':
         reporters, rep_id_list = gen_reporters()
         teams, team_id_list = gen_teams()
         branches, branch_id_list = genBRANCH(reporter_id_list=rep_id_list)
-        customers,cast_id_list = gencast(branch_id_list=branch_id_list)
+        customers, cast_id_list = gencast(branch_id_list=branch_id_list)
         loans = gen_loans(cast_id_list=cast_id_list)
-        workers = gen_workers(branch_id_list=branch_id_list,team_id_list=team_id_list)
+        workers = gen_workers(branch_id_list=branch_id_list, team_id_list=team_id_list)
 
         for rep in reporters:
             data = (rep['reporterID'], rep['reporterName'])
@@ -181,7 +184,7 @@ if __name__ == '__main__':
             connection.commit()
 
         for branch in branches:
-            data = (branch['brancheID'], branch['brancheLocation'],branch['reporterID'],branch['openedDate'])
+            data = (branch['brancheID'], branch['brancheLocation'], branch['reporterID'], branch['openedDate'])
             insert_rep = """ INSERT INTO Branche (brancheID, brancheLocation, reporterID, openedDate)
             VALUES (:1, :2, :3, :4)"""
             cursor.execute(insert_rep, data)
@@ -189,7 +192,7 @@ if __name__ == '__main__':
             # Commit the transaction
             connection.commit()
         for cust in customers:
-            data = (cust['customerID'], cust['customerName'], cust['accountID'],cust['joinDate'], cust['brancheID'])
+            data = (cust['customerID'], cust['customerName'], cust['accountID'], cust['joinDate'], cust['brancheID'])
             insert_rep = """ INSERT INTO Customers (customerID, customerName, accountID, joinDate, brancheID)
                         VALUES (:1, :2, :3, :4, :5)"""
             cursor.execute(insert_rep, data)
@@ -197,7 +200,7 @@ if __name__ == '__main__':
             # Commit the transaction
             connection.commit()
         for loan in loans:
-            data = (loan['loanID'], loan['loanAmount'],loan['customerID'],loan['loanDate'])
+            data = (loan['loanID'], loan['loanAmount'], loan['customerID'], loan['loanDate'])
             insert_rep = """ INSERT INTO Loans (loanID, loanAmount, customerID,loanDate)
                                     VALUES (:1, :2, :3, :4)"""
             cursor.execute(insert_rep, data)
@@ -205,14 +208,14 @@ if __name__ == '__main__':
             # Commit the transaction
             connection.commit()
         for wor in workers:
-            data = (wor['workerID'], wor['workerName'],wor['workerRole'], wor['brancheID'],wor['teamID'])
-            insert_rep = """ INSERT INTO Workers (workerID, workerName, workerRole, brancheID, teamID)
-                                    VALUES (:1, :2, :3, :4, :5)"""
+            data = (wor['workerID'], wor['workerName'], wor['workerRole'], wor['brancheID'], wor['teamID'],
+                    wor['workerAge'])
+            insert_rep = """ INSERT INTO Workers (workerID, workerName, workerRole, brancheID, teamID,workerAge)
+                                    VALUES (:1, :2, :3, :4, :5, :6)"""
             cursor.execute(insert_rep, data)
 
             # Commit the transaction
             connection.commit()
-
 
         # Execute a query to fetch and print the results
         cursor.execute("SELECT * FROM Reporters")

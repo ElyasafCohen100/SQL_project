@@ -16,3 +16,12 @@ BEGIN
 END;
 /
 
+select *
+FROM Loans
+    WHERE customerID IN (
+        SELECT c.customerID
+        FROM Customers c
+        JOIN Branche b ON c.brancheID = b.brancheID
+        WHERE TO_CHAR(c.joinDate, 'YYYY') = '2005'
+        AND b.brancheLocation = 'tel aviv'
+    ); 

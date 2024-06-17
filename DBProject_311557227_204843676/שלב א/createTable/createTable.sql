@@ -10,7 +10,7 @@ CREATE TABLE Reporters (
 );
 CREATE TABLE Branche (
     brancheID INT NOT NULL,
-    brancheLocation VARCHAR2(20) NOT NULL,
+    brancheLocation VARCHAR2(20) ,
     reporterID INT NOT NULL,
     openedDate DATE NOT NULL,
     PRIMARY KEY (brancheID),
@@ -45,7 +45,8 @@ CREATE TABLE Workers (
     teamID INT NOT NULL,
     PRIMARY KEY (workerID),
     FOREIGN KEY (brancheID) REFERENCES Branche(brancheID),
-    FOREIGN KEY (teamID) REFERENCES Teams(teamID)
+    FOREIGN KEY (teamID) REFERENCES Teams(teamID),
+    workerAge int 
 );
 
 

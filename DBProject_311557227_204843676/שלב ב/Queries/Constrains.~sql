@@ -1,0 +1,10 @@
+ALTER TABLE Branche
+MODIFY brancheLocation DEFAULT 'Modiin';
+
+
+ALTER TABLE Workers
+ADD CHECK (workerAge>=18);
+
+
+ALTER TABLE Teams
+MODIFY COLUMN workDay int NOT NULL;

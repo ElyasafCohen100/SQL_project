@@ -1,4 +1,4 @@
---  Find the total number of loans per month in 2012 for the cranches in tel aviv
+--  Find the total number of loans per month in 2012 for the cranches in denver
 
 SELECT 
     TO_CHAR(l.loanDate, 'YYYY-MM') AS loan_month,
@@ -11,7 +11,7 @@ JOIN
 JOIN 
     Branche b ON c.brancheID = b.brancheID
 WHERE 
-    TO_CHAR(l.loanDate, 'YYYY') = '2012' AND b.brancheLocation = 'chicago'
+    TO_CHAR(l.loanDate, 'YYYY') = '2012' AND b.brancheLocation = 'denver'
 GROUP BY 
     TO_CHAR(l.loanDate, 'YYYY-MM'), b.brancheLocation
 ORDER BY 

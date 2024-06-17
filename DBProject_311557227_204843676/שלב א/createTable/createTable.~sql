@@ -10,7 +10,7 @@ CREATE TABLE Reporters (
 );
 CREATE TABLE Branche (
     brancheID INT NOT NULL,
-    brancheLocation VARCHAR2(20) NOT NULL,
+    brancheLocation VARCHAR2(20) DEFAULT 'Modiin',
     reporterID INT NOT NULL,
     openedDate DATE NOT NULL,
     PRIMARY KEY (brancheID),
@@ -30,6 +30,7 @@ CREATE TABLE Loans (
     loanID INT NOT NULL,
     loanAmount INT NOT NULL,   
     customerID INT NOT NULL,
+    loanDate DATE NOT NULL,
     FOREIGN KEY (customerID) REFERENCES Customers(customerID),
     PRIMARY KEY (loanID)
 );
@@ -45,6 +46,7 @@ CREATE TABLE Workers (
     PRIMARY KEY (workerID),
     FOREIGN KEY (brancheID) REFERENCES Branche(brancheID),
     FOREIGN KEY (teamID) REFERENCES Teams(teamID)
+    worker_age int CHECK (Age>=18)
 );
 
 
