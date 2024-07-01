@@ -15,7 +15,18 @@ WHERE workerID IN (
     SELECT workerID
     FROM Workers
     WHERE workerRole = 'Officer'
-    AND brancheID = 103001  -- Replace with the specific branch ID you want to update
+    AND brancheID = 103001
+);
+
+COMMIT;
+
+select *
+from workers
+WHERE workerID IN (
+    SELECT workerID
+    FROM Workers
+    WHERE workerRole = 'Senior Officer'
+    AND brancheID = 103001  
 );
 
 COMMIT;
