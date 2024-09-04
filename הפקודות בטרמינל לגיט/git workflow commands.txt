@@ -1,0 +1,13 @@
+// ============ upload the update  (push) ============ //
+
+git pull												//  to avoid conflicts
+
+git add -A
+
+git commit -m "commit name"
+
+git push origin main
+
+
+// ============ download the update (pull) ============ //
+git pull
